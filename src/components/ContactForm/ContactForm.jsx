@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const contacts = useSelector(state => state.contacts.items);
 
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const ContactForm = () => {
     if (inputName === 'name') {
       setName(value);
     } else if (inputName === 'number') {
-      setPhone(value);
+      setNumber(value);
     }
   };
   const handleSubmit = e => {
@@ -26,9 +26,9 @@ const ContactForm = () => {
       alert(name + ' is already in contacts');
       return;
     }
-    dispatch(addContacts({ name, phone, id: nanoid() }));
+    dispatch(addContacts({ name, number }));
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -52,7 +52,7 @@ const ContactForm = () => {
           type="tel"
           name="number"
           className={css.input}
-          value={phone}
+          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

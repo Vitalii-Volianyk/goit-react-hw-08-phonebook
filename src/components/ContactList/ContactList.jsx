@@ -20,11 +20,11 @@ const ContactList = () => {
   );
   return (
     <ul className={css.container}>
-      {visibleContacts.map(({ id, name, phone }, index) => (
+      {visibleContacts.map(({ id, name, number }, index) => (
         <ContactItem
           key={id}
           name={name}
-          number={phone}
+          number={number}
           idx={id}
           onRemove={() => {
             dispatch(removeContacts(id));

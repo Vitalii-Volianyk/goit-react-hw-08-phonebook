@@ -9,13 +9,13 @@ const auth = {
     axios.defaults.headers.common.Authorization = '';
   },
 };
-axios.defaults.baseURL = 'https://63d42dfcc52305feff5f4e6c.mockapi.io';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 export const registerUser = createAsyncThunk(
-  'contacts/fetchAll',
-  async (_, thunkAPI) => {
+  'signup',
+  async (credentials, thunkAPI) => {
     try {
-      const response = await axios.get('/register');
+      const response = await axios.post('/users/signup', credentials);
       auth.set(response.data.token);
       return response.data;
     } catch (e) {
@@ -24,10 +24,10 @@ export const registerUser = createAsyncThunk(
   }
 );
 export const loginUser = createAsyncThunk(
-  'contacts/addContact',
-  async (newItem, thunkAPI) => {
+  'login',
+  async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/login', newItem);
+      const response = await axios.post('/users/login', credentials);
       auth.set(response.data.token);
       return response.data;
     } catch (e) {
@@ -35,26 +35,26 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-export const logOut = createAsyncThunk(
-  'contacts/addContact',
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.post('/login');
-      auth.unset();
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
+export const logOut = createAsyncThunk('logout', async (_, thunkAPI) => {
+  try {
+    const response = await axios.post('/users/logout');
+    auth.unset();
+    return response.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.message);
   }
-);
-export const refreshUser = createAsyncThunk(
-  'contacts/deleteContact',
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.delete(`/current`);
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
+});
+export const refreshUser = createAsyncThunk('current', async (_, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const persistedToken = state.auth.token;
+  if (persistedToken === null) {
+    return thunkAPI.rejectWithValue('Unable to fetch user');
   }
-);
+  try {
+    auth.set(persistedToken);
+    const response = await axios.get(`/users/current`);
+    return response.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});
