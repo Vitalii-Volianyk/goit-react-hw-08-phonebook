@@ -1,6 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const auth = {
+  set(token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },
+  unset() {
+    axios.defaults.headers.common['Authorization'] = '';
+  },
+};
+
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
