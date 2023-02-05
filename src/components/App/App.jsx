@@ -5,21 +5,21 @@ import { useAuth } from 'hooks/useAuth';
 import { refreshUser } from 'redux/auth/operations';
 import { RestrictedRoute } from 'components/subRoutes/RestrictedRoute';
 import { PrivateRoute } from 'components/subRoutes/PrivateRoute';
-import { Layout } from 'components/Layout';
+import { Layout } from 'components/Layouts/Main';
 import HomePage from 'pages/Home';
 import RegisterPage from 'pages/Register';
 import LoginPage from 'pages/Login';
-import Contacts from 'pages/contacts';
+import Contacts from 'pages/Contacts';
 
 const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
-  isRefreshing ? (
+  return isRefreshing ? (
     <b>Refreshing user...</b>
   ) : (
     <Routes>
@@ -28,17 +28,20 @@ const App = () => {
         <Route
           path="/register"
           element={
-            <RestrictedRoute redirectTo="/tasks" component={<RegisterPage />} />
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<RegisterPage />}
+            />
           }
         />
         <Route
           path="/login"
           element={
-            <RestrictedRoute redirectTo="/tasks" component={<LoginPage />} />
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
           }
         />
         <Route
-          path="/tasks"
+          path="/contacts"
           element={
             <PrivateRoute redirectTo="/login" component={<Contacts />} />
           }

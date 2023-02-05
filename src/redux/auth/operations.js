@@ -16,6 +16,7 @@ export const registerUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('/register');
+      auth.set(response.data.token);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -27,6 +28,19 @@ export const loginUser = createAsyncThunk(
   async (newItem, thunkAPI) => {
     try {
       const response = await axios.post('/login', newItem);
+      auth.set(response.data.token);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+export const logOut = createAsyncThunk(
+  'contacts/addContact',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.post('/login');
+      auth.unset();
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
