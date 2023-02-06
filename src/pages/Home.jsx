@@ -8,6 +8,7 @@ const HomePage = () => {
     <div style={css.container}>
       <h1>Home</h1>
       <iframe
+        title="Dino"
         src="https://chromedino.com/"
         frameBorder="0"
         scrolling="no"
