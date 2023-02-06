@@ -19,19 +19,19 @@
   margin: 0 10px;
   color: azure;
   text-transform: capitalize;
-  background-color: #06b7f1;
+  background-color: #4a98f7;
   cursor: pointer;
 }
 .button:hover {
-  background-color: #06a0d3;
+  background-color: #4a98f7;
 }
 .input {
   padding: 10px 15px;
-  border: 1px solid #06a0d3;
+  border: 1px solid #4a98f7;
   border-radius: 5px;
 }
 .input:focus {
-  outline: 1px solid #06a0d3;
+  outline: 1px solid #4a98f7;
 }
 .input:invalid {
   border: 1px solid rgb(148, 96, 96);
